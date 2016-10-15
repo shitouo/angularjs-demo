@@ -1,0 +1,38 @@
+<div class="invite-bar">
+    邀请新嘉宾：
+    <input type="text" ng-model="data.newGuest.name">
+    <span>，手机号：</span>
+    <input type="text" ng-model="data.newGuest.tel">
+    <button class="btn btn-sm btn-default" ng-click="actions.invite()">邀请 <i class="glyphicon glyphicon-ok"></i></button>
+    <span ng-if="data.error">  请输入嘉宾姓名或者手机号码</span>
+    <div>
+        开启过滤模式 ： <input type="checkbox" ng-model="data.selecMode">
+    </div>
+</div>
+<div>
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>受邀请人</th>
+            <th>联系方式</th>
+            <th>邀请状态</th>
+            <th>可用操作</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr ng-repeat="guest in data.list" ng-if="!data.selecMode || guest.state == '未确认'">
+            <td>
+                <a ui-sref="detail({'tel':guest.tel})">{{guest.name}}</a>
+            </td>
+            <td>{{guest.tel}}</td>
+            <td>{{guest.state}}</td>
+            <td class="my-actions">
+                <a class="btn-default btn-sm" ng-click="actions.setState(guest,'已接收')" ng-if="guest.state == '未确认'">接受<i class="glyphicon glyphicon-check"></i></a>
+                <a class="btn-default btn-sm" ng-click="actions.setState(guest,'已拒绝')" ng-if="guest.state == '未确认'">拒绝<i class="glyphicon glyphicon-log-out"></i></a>
+                <a class="btn-default btn-sm" ng-click="actions.remove(guest)">清除记录 <i class="glyphicon glyphicon-remove"></i></a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
